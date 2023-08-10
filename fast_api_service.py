@@ -19,25 +19,25 @@ import os
 
 
 ## Download test_set_general.csv
-gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1iiF-UQx-kGIG54jS791ze3dAceqEvUsx')
+gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1iiF-UQx-kGIG54jS791ze3dAceqEvUsx', '/data/')
 
 ## Download text_model folder content
 os.mkdir('./text_model_general_label')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-6ThDz5S7GZeTtP74c7B4TkZ1vKS2sP6',
-               './text_model_general_label/config.json')
+               '/data/text_model_general_label/config.json')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-5L29XnzokoHMfMEvw7wZb6fGc5j1O6p',
-               './text_model_general_label/pytorch_model.bin')
+               '/data/text_model_general_label/pytorch_model.bin')
 
 ## Download vision_model folder content
-os.mkdir('./vision_model_general_label')
+os.mkdir('/data/vision_model_general_label')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--Akn08LVreaaInW6Dsa8hw6FEF7GWFP',
-               './vision_model_general_label/config.json')
+               '/data/vision_model_general_label/config.json')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--eKcoWllY3pNdJckVLaGyuSmRn-KrI-',
-               './vision_model_general_label/pytorch_model.bin')
+               '/data/vision_model_general_label/pytorch_model.bin')
 
 
-vision_model = CLIPVisionModel.from_pretrained('./vision_model_general_label', local_files_only=True)
-text_model = AutoModel.from_pretrained('./text_model_general_label', local_files_only=True)
+vision_model = CLIPVisionModel.from_pretrained('/data/vision_model_general_label', local_files_only=True)
+text_model = AutoModel.from_pretrained('/data/text_model_general_label', local_files_only=True)
 
 MEAN = torch.tensor([0.48145466, 0.4578275, 0.40821073])
 STD = torch.tensor([0.26862954, 0.26130258, 0.27577711])
@@ -46,7 +46,7 @@ MAX_LEN = 80
 tokenizer = AutoTokenizer.from_pretrained('roberta-base')
 
 
-test_df = pd.read_csv('./test_set_general.csv')
+test_df = pd.read_csv('/data/test_set_general.csv')
 
 
 class VisionDataset(Dataset):
