@@ -15,7 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import tarfile
 import os
-import mlflow
+# import mlflow
 
 
 ## Download test_set_general.csv
@@ -118,7 +118,7 @@ class TextDataset(Dataset):
 
     def __len__(self):
         return self.len
-    
+
 class CLIPDemo:
     def __init__(self, vision_encoder, text_encoder, tokenizer,
                  batch_size: int = 32, max_len: int = 32, device='cpu'):
@@ -129,7 +129,7 @@ class CLIPDemo:
         self.tokenizer = tokenizer
         self.max_len = max_len
         self.text_embeddings = None
-        self.image_embeddings = None        
+        self.image_embeddings = None
 
     def compute_image_embeddings(self, image_paths: list):
         self.image_paths = image_paths
@@ -179,10 +179,10 @@ class CLIPDemo:
         image_embedding = self.image_query_embedding(image)
         values, indices = self.most_similars(image_embedding, self.text_embeddings)
         # mlflow: stop active runs if any
-        if mlflow.active_run():
-            mlflow.end_run()
+        # if mlflow.active_run():
+        #     mlflow.end_run()
         # mlflow:track run
-        mlflow.start_run()
+        # mlflow.start_run()
         for i, sim in zip(indices, torch.softmax(values, dim=0)):
             print(f'Probability : {float(sim)}')
             print(
@@ -190,12 +190,12 @@ class CLIPDemo:
             print('_________________________')
             top_k -= 1
             metric_name = "top" + str(output_num) + "_zeroshot_" + str((output_num - top_k))
-            mlflow.log_metrics({
-                metric_name: float(sim),
-            })
+            # mlflow.log_metrics({
+                # metric_name: float(sim),
+            # })
             if top_k == 0:
                 # mlflow: end tracking
-                mlflow.end_run()
+                # mlflow.end_run()
                 break
         plt.imshow(image)
         plt.axis('off')
@@ -207,7 +207,7 @@ class CLIPDemo:
             self.text_embeddings, image_embedding)
 
         return values , indices
-    
+
     def predict(self, image):
         top_k = 5
         output_num = 5
@@ -217,10 +217,10 @@ class CLIPDemo:
         image_embedding = self.image_query_embedding(image)
         values, indices = self.most_similars(image_embedding, self.text_embeddings)
         # mlflow: stop active runs if any
-        if mlflow.active_run():
-            mlflow.end_run()
+        # if mlflow.active_run():
+        #     mlflow.end_run()
         # mlflow:track run
-        mlflow.start_run()
+        # mlflow.start_run()
         for i, sim in zip(indices, torch.softmax(values, dim=0)):
             output_dict[f'Rank-{abs(top_k - output_num) + 1}'] = {
               'Probability':float(sim),
@@ -228,16 +228,16 @@ class CLIPDemo:
             }
             top_k -= 1
             metric_name = "top" + str(output_num) + "_" + str((output_num - top_k))
-            mlflow.log_metrics({
-                metric_name: float(sim),
-            })
-            
+            # mlflow.log_metrics({
+            #     metric_name: float(sim),
+            # })
+
             if top_k == 0:
                 # mlflow: end tracking
-                mlflow.end_run()
+                # mlflow.end_run()
                 break
         return output_dict
-    
+
 search_demo = CLIPDemo(vision_model, text_model, tokenizer)
 search_demo.compute_text_embeddings(test_df.label.tolist())
 
@@ -273,4 +273,4 @@ def prediction_api(image: UploadFile = File (...)):
   output =  search_demo.predict(image)
   return output
 
-uvicorn.run(app , host="0.0.0.0", port=8000)
+# uvicorn.run(app , host="0.0.0.0", port=8000)
