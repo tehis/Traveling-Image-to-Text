@@ -1,5 +1,5 @@
 # FROM docker.repos.balad.ir/python:3.10
-FROM hub.hamdocker.ir/python:3.10
+FROM python:3.10
 
 
 WORKDIR /code
