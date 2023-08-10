@@ -21,9 +21,6 @@ import os
 ## Download test_set_general.csv
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1iiF-UQx-kGIG54jS791ze3dAceqEvUsx')
 
-## Download all_images.tar
-gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG')
-
 ## Download text_model folder content
 os.mkdir('./text_model_general_label')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-6ThDz5S7GZeTtP74c7B4TkZ1vKS2sP6',
@@ -38,10 +35,6 @@ gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--A
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--eKcoWllY3pNdJckVLaGyuSmRn-KrI-',
                './vision_model_general_label/pytorch_model.bin')
 
-##extract a tar file
-images_tar = tarfile.open('all_images.tar')
-images_tar.extractall()
-images_tar.close()
 
 vision_model = CLIPVisionModel.from_pretrained('./vision_model_general_label', local_files_only=True)
 text_model = AutoModel.from_pretrained('./text_model_general_label', local_files_only=True)
@@ -53,41 +46,8 @@ MAX_LEN = 80
 tokenizer = AutoTokenizer.from_pretrained('roberta-base')
 
 
-class CLIPDataset(Dataset):
-    def __init__(self, image_paths: list, text: list, mode: str = 'train'):
-        self.image_paths = image_paths
-        self.tokens = tokenizer(text, padding='max_length',
-                                max_length=MAX_LEN, truncation=True)
-
-        if mode == 'train':
-            self.augment = transforms.Compose([
-                transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
-                transforms.RandomHorizontalFlip(p=0.5),
-                transforms.ToTensor(),
-                transforms.Normalize(mean=MEAN, std=STD)
-            ])
-        elif mode == 'test':
-            self.augment = transforms.Compose([
-                transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
-                transforms.ToTensor(),
-                transforms.Normalize(mean=MEAN, std=STD)
-            ])
-
-    def __getitem__(self, idx):
-        token = self.tokens[idx]
-        return {'input_ids': token.ids, 'attention_mask': token.attention_mask,
-                'pixel_values': self.augment(Image.open(self.image_paths[idx]).convert('RGB'))}
-
-    def __len__(self):
-        return len(self.image_paths)
-
-
-IMAGES_FOLDER_PATH = 'all_images'
 test_df = pd.read_csv('./test_set_general.csv')
 
-test_images_paths = [(IMAGES_FOLDER_PATH +'/' + id + '.jpg') for id in test_df.image_id.tolist()]
-test_ds = CLIPDataset(image_paths=test_images_paths,
-                      text=test_df.label.tolist(), mode='test')
 
 class VisionDataset(Dataset):
     preprocess = transforms.Compose([
@@ -118,6 +78,7 @@ class TextDataset(Dataset):
 
     def __len__(self):
         return self.len
+
 
 class CLIPDemo:
     def __init__(self, vision_encoder, text_encoder, tokenizer,
@@ -240,18 +201,6 @@ class CLIPDemo:
 
 search_demo = CLIPDemo(vision_model, text_model, tokenizer)
 search_demo.compute_text_embeddings(test_df.label.tolist())
-
-# search_demo.text = test_df.label.tolist()
-# search_demo.text_embeddings = torch.load('./text_embeddings.pt')
-
-# corrects = 0 
-# for idx , test_img in enumerate(tqdm(test_images_paths)):
-#   _ , suggested_text_indices  = search_demo.caption_search(test_img)
-#   suggested_text_indices = np.array(suggested_text_indices)
-
-#   if idx in suggested_text_indices[:50]:
-#     corrects += 1
-# print(f'Accuracy is : {corrects / len(test_images_paths)} %')
 
 
 app = FastAPI()
