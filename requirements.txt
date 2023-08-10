@@ -3,7 +3,7 @@ fastapi[all]==0.89.0
 uvicorn[standard]==0.20.0
 gunicorn==20.1.0
 transformers==4.29.2
-gdown==4.5.3
+gdown>=4.7.1
 tqdm==4.65.0
 numpy==1.24.3
 pandas==1.4.2
