@@ -19,24 +19,24 @@ import os
 
 
 ## Download test_set_general.csv
-gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG')
+gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG', '/var/lib/data/')
 
 # all_images.tar
 # gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1iiF-UQx-kGIG54jS791ze3dAceqEvUsx', '/var/lib/data/')
 
 ## Download text_model folder content
-os.mkdir('text_model_general_label')
+os.mkdir('/var/lib/data/text_model_general_label')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-6ThDz5S7GZeTtP74c7B4TkZ1vKS2sP6',
-               'text_model_general_label/config.json')
+               '/var/lib/data/text_model_general_label/config.json')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-5L29XnzokoHMfMEvw7wZb6fGc5j1O6p',
-               'text_model_general_label/pytorch_model.bin')
+               '/var/lib/data/text_model_general_label/pytorch_model.bin')
 
 ## Download vision_model folder content
-os.mkdir('vision_model_general_label')
+os.mkdir('/var/lib/data/vision_model_general_label')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--Akn08LVreaaInW6Dsa8hw6FEF7GWFP',
-               'vision_model_general_label/config.json')
+               '/var/lib/data/vision_model_general_label/config.json')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--eKcoWllY3pNdJckVLaGyuSmRn-KrI-',
-               'vision_model_general_label/pytorch_model.bin')
+               '/var/lib/data/vision_model_general_label/pytorch_model.bin')
 
 
 vision_model = CLIPVisionModel.from_pretrained('/var/lib/data/vision_model_general_label', local_files_only=True)
