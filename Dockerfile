@@ -5,7 +5,7 @@ FROM python:3.10
 WORKDIR /code
 
 # RUN pip install --trusted-host https://mirrors.aliyun.com -i https://mirrors.aliyun.com/pypi/simple/ pysocks
-RUN  pip install -i https://download.pytorch.org/whl/cpu torchvision==0.10.0 torch==1.9.0
+RUN  pip install -i https://download.pytorch.org/whl/cpu torchvision torch
 
 # COPY ./load_model.py /code/
 # RUN python /code/load_model.py
