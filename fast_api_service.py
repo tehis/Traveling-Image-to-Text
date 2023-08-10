@@ -19,28 +19,28 @@ import os
 
 
 ## Download test_set_general.csv
-gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG', '/var/lib/data')
+gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG')
 
 # all_images.tar
-# gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1iiF-UQx-kGIG54jS791ze3dAceqEvUsx', '/var/lib/data')
+# gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1iiF-UQx-kGIG54jS791ze3dAceqEvUsx', '/var/lib/data/')
 
 ## Download text_model folder content
-os.mkdir('/var/lib/datatext_model_general_label')
+os.mkdir('text_model_general_label')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-6ThDz5S7GZeTtP74c7B4TkZ1vKS2sP6',
-               '/var/lib/datatext_model_general_label/config.json')
+               'text_model_general_label/config.json')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-5L29XnzokoHMfMEvw7wZb6fGc5j1O6p',
-               '/var/lib/datatext_model_general_label/pytorch_model.bin')
+               'text_model_general_label/pytorch_model.bin')
 
 ## Download vision_model folder content
-os.mkdir('/var/lib/datavision_model_general_label')
+os.mkdir('vision_model_general_label')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--Akn08LVreaaInW6Dsa8hw6FEF7GWFP',
-               '/var/lib/datavision_model_general_label/config.json')
+               'vision_model_general_label/config.json')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--eKcoWllY3pNdJckVLaGyuSmRn-KrI-',
-               '/var/lib/datavision_model_general_label/pytorch_model.bin')
+               'vision_model_general_label/pytorch_model.bin')
 
 
-vision_model = CLIPVisionModel.from_pretrained('/var/lib/datavision_model_general_label', local_files_only=True)
-text_model = AutoModel.from_pretrained('/var/lib/datatext_model_general_label', local_files_only=True)
+vision_model = CLIPVisionModel.from_pretrained('/var/lib/data/vision_model_general_label', local_files_only=True)
+text_model = AutoModel.from_pretrained('/var/lib/data/text_model_general_label', local_files_only=True)
 
 MEAN = torch.tensor([0.48145466, 0.4578275, 0.40821073])
 STD = torch.tensor([0.26862954, 0.26130258, 0.27577711])
@@ -49,7 +49,7 @@ MAX_LEN = 80
 tokenizer = AutoTokenizer.from_pretrained('roberta-base')
 
 
-test_df = pd.read_csv('/var/lib/datatest_set_general.csv')
+test_df = pd.read_csv('/var/lib/data/test_set_general.csv')
 
 
 class VisionDataset(Dataset):
