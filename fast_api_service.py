@@ -19,10 +19,13 @@ import os
 
 
 ## Download test_set_general.csv
-gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1iiF-UQx-kGIG54jS791ze3dAceqEvUsx', '/data/')
+gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG')
+
+# all_images.tar
+# gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1iiF-UQx-kGIG54jS791ze3dAceqEvUsx', '/data/')
 
 ## Download text_model folder content
-os.mkdir('./text_model_general_label')
+os.mkdir('/data/text_model_general_label')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-6ThDz5S7GZeTtP74c7B4TkZ1vKS2sP6',
                '/data/text_model_general_label/config.json')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-5L29XnzokoHMfMEvw7wZb6fGc5j1O6p',
