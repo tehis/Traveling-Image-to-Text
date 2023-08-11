@@ -406,6 +406,6 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
             "rank_3_specific": output_specific["Rank-3"],
             "rank_4_specific": output_specific["Rank-4"],
             "rank_5_specific": output_specific["Rank-5"],
-            "image":image
+            # "image":image
         },
     )
