@@ -24,6 +24,7 @@ from transformers import (
     CLIPVisionModel,
     default_data_collator,
 )
+from datetime import datetime
 
 # Download test_set_general.csv
 gdown.cached_download(
@@ -283,9 +284,10 @@ class CLIPDemo:
         # mlflow:track run
         # tracking_uri = ""
         # mlflow.set_tracking_uri(tracking_uri)
-        experiment_name = str(use_case) +"_"+ str(time.time())
+        # experiment_name = str(use_case) +"_"+ str(time.time())
+        experiment_name = str(use_case) 
         mlflow.set_experiment(experiment_name)
-        mlflow.start_run()
+        mlflow.start_run(run_name=str(use_case) +"_"+ str(datetime.today().strftime('%Y-%m-%d %H:%M:%S')))
         # monitor hardware usage
         cpu_percent, memory_percent = self.monitor_hardware()
         start_time = time.time()
