@@ -4,7 +4,6 @@ FROM python:3.10
 
 WORKDIR /code
 
-# RUN pip install --trusted-host https://mirrors.aliyun.com -i https://mirrors.aliyun.com/pypi/simple/ pysocks
 RUN  pip install -i https://download.pytorch.org/whl/cpu torchvision torch
 RUN pip install -U --no-cache-dir gdown --pre
 

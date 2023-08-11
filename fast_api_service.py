@@ -17,24 +17,24 @@ import mlflow
 
 
 ## Download test_set_general.csv
-gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG', '/var/lib/data/')
+gdown.cached_download('https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG', '/var/lib/data/')
 
 
 ## Download text_model folder content
 if not os.path.exists('/var/lib/data/text_model_general_label'):
     os.mkdir('/var/lib/data/text_model_general_label')
-gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-6ThDz5S7GZeTtP74c7B4TkZ1vKS2sP6',
+gdown.cached_download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-6ThDz5S7GZeTtP74c7B4TkZ1vKS2sP6',
                '/var/lib/data/text_model_general_label/config.json')
-gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-5L29XnzokoHMfMEvw7wZb6fGc5j1O6p',
+gdown.cached_download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-5L29XnzokoHMfMEvw7wZb6fGc5j1O6p',
                '/var/lib/data/text_model_general_label/pytorch_model.bin')
 
 
 ## Download vision_model folder content
 if not os.path.exists('/var/lib/data/vision_model_general_label'):
     os.mkdir('/var/lib/data/vision_model_general_label')
-gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--Akn08LVreaaInW6Dsa8hw6FEF7GWFP',
+gdown.cached_download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--Akn08LVreaaInW6Dsa8hw6FEF7GWFP',
                '/var/lib/data/vision_model_general_label/config.json')
-gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--eKcoWllY3pNdJckVLaGyuSmRn-KrI-',
+gdown.cached_download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--eKcoWllY3pNdJckVLaGyuSmRn-KrI-',
                '/var/lib/data/vision_model_general_label/pytorch_model.bin')
 
 
