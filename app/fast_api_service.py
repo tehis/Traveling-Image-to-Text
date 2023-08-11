@@ -246,7 +246,7 @@ class CLIPDemo:
 
 
 search_demo = CLIPDemo(vision_model, text_model, tokenizer)
-# search_demo.compute_text_embeddings(test_df.label.tolist())
+search_demo.compute_text_embeddings(test_df.label.tolist())
 
 
 app = FastAPI()
@@ -273,21 +273,21 @@ def upload(request: Request):
 def prediction_api(request: Request, image: UploadFile = File(...)):
     # output = search_demo.predict(image)
     return templates.TemplateResponse(
-        "result.html", {
-            "request": request,
-            "rank_1": {"Probability": 1, "label": "salgijfgg "},
-            "rank_2": {"Probability": 1.23, "label": "sgdghsalgijfgg "},
-            "rank_3": {"Probability": 0.245, "label": "salg dfg ggdhijfgg "},
-            "rank_4": {"Probability": 0.34545645, "label": "salgijdfghgh dgsh fgg dlfgje gmoejqojeogmoe;mg joetjmgo;wtjot tjii "},
-            "rank_5": {"Probability": 0.0000035, "label": "salgijfglegkjds t jeg;ojh;iogsj orwhjio;THkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk PJRTHJ RTHJ'WHJO'HJRG J;ORTIJHROIRGJHOJ jmrojphtrg dfsh gfh dsfh fsh \n adryyt "},
-        }
-        # "result.html",
-        # {
+        # "result.html", {
         #     "request": request,
-        #     "rank_1": output["Rank-1"],
-        #     "rank_2": output["Rank-2"],
-        #     "rank_3": output["Rank-3"],
-        #     "rank_4": output["Rank-4"],
-        #     "rank_5": output["Rank-5"],
-        # },
+        #     "rank_1": {"Probability": 1, "label": "salgijfgg "},
+        #     "rank_2": {"Probability": 1.23, "label": "sgdghsalgijfgg "},
+        #     "rank_3": {"Probability": 0.245, "label": "salg dfg ggdhijfgg "},
+        #     "rank_4": {"Probability": 0.34545645, "label": "salgijdfghgh dgsh fgg dlfgje gmoejqojeogmoe;mg joetjmgo;wtjot tjii "},
+        #     "rank_5": {"Probability": 0.0000035, "label": "salgijfglegkjds t jeg;ojh;iogsj orwhjio;THkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk PJRTHJ RTHJ'WHJO'HJRG J;ORTIJHROIRGJHOJ jmrojphtrg dfsh gfh dsfh fsh \n adryyt "},
+        # }
+        "result.html",
+        {
+            "request": request,
+            "rank_1": output["Rank-1"],
+            "rank_2": output["Rank-2"],
+            "rank_3": output["Rank-3"],
+            "rank_4": output["Rank-4"],
+            "rank_5": output["Rank-5"],
+        },
     )
