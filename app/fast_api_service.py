@@ -15,6 +15,7 @@ from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
 import time
+import psutil
 from transformers import (
     AutoModel,
     AutoTokenizer,
@@ -266,7 +267,12 @@ class CLIPDemo:
             self.text_embeddings, image_embedding)
 
         return values, indices
-
+    
+    def monitor_hardware(self):
+        cpu_percent = psutil.cpu_percent()
+        memory_percent = psutil.virtual_memory().percent
+        return cpu_percent , memory_percent
+    
     def predict(self, image, use_case):
         top_k = 5
         output_num = 5
