@@ -30,7 +30,7 @@ gdown.cached_download(
     "/var/lib/data/",
 )
 # Download supervised_test_set.csv
-gdown.cached_download(
+gdown.download(
     "https://drive.google.com/uc?export=download&confirm=pbef&id=1NoAluvhq4Z8A0m9TV1gfpxBq8sPgNap7",
     "/var/lib/data/",
 )
