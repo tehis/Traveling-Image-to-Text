@@ -271,7 +271,7 @@ def upload(request: Request):
 
 @app.post("/predict")
 def prediction_api(request: Request, image: UploadFile = File(...)):
-    # output = search_demo.predict(image)
+    output = search_demo.predict(image)
     return templates.TemplateResponse(
         # "result.html", {
         #     "request": request,
