@@ -203,7 +203,7 @@ class CLIPDemo:
 
 
 search_demo = CLIPDemo(vision_model, text_model, tokenizer)
-# search_demo.compute_text_embeddings(test_df.label.tolist())
+search_demo.compute_text_embeddings(test_df.label.tolist())
 
 
 app = FastAPI()
@@ -223,9 +223,5 @@ app.add_middleware(
 
 @app.post("/predict")
 def prediction_api(image: UploadFile = File (...)):
-    mlflow.start_run()
-    mlflow.log_metrics({
-        'temp': 1,
-    })
-#   output =  search_demo.predict(image)
-#   return output
+  output =  search_demo.predict(image)
+  return output
