@@ -86,13 +86,13 @@ gdown.cached_download(
 )
 
 # Download text_embeddings_general.pt
-gdown.cached_download(
+gdown.download(
     "https://drive.google.com/uc?export=download&confirm=pbef&id=1isO8_XFYvKvvJh8adeGRO7tGlWDKHpzS",
     "/var/lib/data/",
 )
 
 # Download text_embeddings_specific.pt
-gdown.cached_download(
+gdown.download(
     "https://drive.google.com/uc?export=download&confirm=pbef&id=1yfrAp9dHgvbaVUxjsRagGayq4zhvLvsi",
     "/var/lib/data/",
 )
