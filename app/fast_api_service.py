@@ -283,8 +283,8 @@ class CLIPDemo:
         # mlflow:track run
         # tracking_uri = ""
         # mlflow.set_tracking_uri(tracking_uri)
-        # experiment_name = ""
-        # mlflow.set_experiment(experiment_name)
+        experiment_name = str(use_case) +"_"+ str(time.time())
+        mlflow.set_experiment(experiment_name)
         mlflow.start_run()
         # monitor hardware usage
         cpu_percent, memory_percent = self.monitor_hardware()
