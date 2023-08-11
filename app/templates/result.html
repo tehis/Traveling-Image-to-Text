@@ -125,6 +125,14 @@
       tr , td{
         vertical-align: top !important
       }
+      .odd-row {
+        background-color: #f2f2f2; /* رنگ تاریک برای سطرهای فرد */
+      }
+
+      .even-row {
+        background-color: #ffffff; /* رنگ روشن برای سطرهای زوج */
+      }
+
     </style>
   </head>
   <body>
@@ -140,23 +148,23 @@
               <th >Probability</th>
               <th id="right">General Details Text</th>
             </tr>
-            <tr>
+            <tr class="odd-row">
               <td>{{rank_1_general["Probability"]}}</td>
               <td>{{rank_1_general["label"]}}</td>
             </tr>
-            <tr>
+            <tr class="even-row">
               <td>{{rank_2_general["Probability"]}}</td>
               <td>{{rank_2_general["label"]}}</td>
             </tr>
-            <tr>
+            <tr class="odd-row">
               <td>{{rank_3_general["Probability"]}}</td>
               <td>{{rank_3_general["label"]}}</td>
             </tr>
-            <tr>
+            <tr class="even-row">
               <td>{{rank_4_general["Probability"]}}</td>
               <td>{{rank_4_general["label"]}}</td>
             </tr>
-            <tr>
+            <tr class="odd-row">
               <td>{{rank_5_general["Probability"]}}</td>
               <td>{{rank_5_general["label"]}}</td>
             </tr>
@@ -173,23 +181,23 @@
               <th>Probability</th>
               <th>Specific Details Text</th>
             </tr>
-            <tr>
+            <tr class="odd-row">
               <td>{{rank_1_specific["Probability"]}}</td>
               <td>{{rank_1_specific["label"]}}</td>
             </tr>
-            <tr>
+            <tr class="even-row">
               <td>{{rank_2_specific["Probability"]}}</td>
               <td>{{rank_2_specific["label"]}}</td>
-            </tr>
+            </tr class="odd-row">
             <tr>
               <td>{{rank_3_specific["Probability"]}}</td>
               <td>{{rank_3_specific["label"]}}</td>
             </tr>
-            <tr>
+            <tr class="even-row">
               <td>{{rank_4_specific["Probability"]}}</td>
               <td>{{rank_4_specific["label"]}}</td>
             </tr>
-            <tr>
+            <tr class="odd-row">
               <td>{{rank_5_specific["Probability"]}}</td>
               <td>{{rank_5_specific["label"]}}</td>
             </tr>

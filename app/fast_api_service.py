@@ -306,7 +306,7 @@ class CLIPDemo:
         # top5_1 = Gauge('top5_1', 'top5 1')
         for i, sim in zip(indices, torch.softmax(values, dim=0)):
             output_dict[f'Rank-{abs(top_k - output_num) + 1}'] = {
-                'Probability': float(sim)*100 ,
+                'Probability': float(f"{float(sim)*100:.4f}"),
                 'label': self.text[i]
             }
             top_k -= 1
