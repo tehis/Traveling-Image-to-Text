@@ -12,27 +12,26 @@ import torchvision.transforms as transforms
 from fastapi import FastAPI, UploadFile, File
 import io
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
-import tarfile
 import os
-# import mlflow
+import mlflow
 
 
 ## Download test_set_general.csv
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG', '/var/lib/data/')
 
-# all_images.tar
-# gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1iiF-UQx-kGIG54jS791ze3dAceqEvUsx', '/var/lib/data/')
 
 ## Download text_model folder content
-os.mkdir('/var/lib/data/text_model_general_label')
+if not os.path.exists('/var/lib/data/text_model_general_label'):
+    os.mkdir('/var/lib/data/text_model_general_label')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-6ThDz5S7GZeTtP74c7B4TkZ1vKS2sP6',
                '/var/lib/data/text_model_general_label/config.json')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1-5L29XnzokoHMfMEvw7wZb6fGc5j1O6p',
                '/var/lib/data/text_model_general_label/pytorch_model.bin')
 
+
 ## Download vision_model folder content
-os.mkdir('/var/lib/data/vision_model_general_label')
+if not os.path.exists('/var/lib/data/vision_model_general_label'):
+    os.mkdir('/var/lib/data/vision_model_general_label')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--Akn08LVreaaInW6Dsa8hw6FEF7GWFP',
                '/var/lib/data/vision_model_general_label/config.json')
 gdown.download('https://drive.google.com/uc?export=download&confirm=pbef&id=1--eKcoWllY3pNdJckVLaGyuSmRn-KrI-',
@@ -143,10 +142,10 @@ class CLIPDemo:
         image_embedding = self.image_query_embedding(image)
         values, indices = self.most_similars(image_embedding, self.text_embeddings)
         # mlflow: stop active runs if any
-        # if mlflow.active_run():
-        #     mlflow.end_run()
+        if mlflow.active_run():
+            mlflow.end_run()
         # mlflow:track run
-        # mlflow.start_run()
+        mlflow.start_run()
         for i, sim in zip(indices, torch.softmax(values, dim=0)):
             print(f'Probability : {float(sim)}')
             print(
@@ -154,12 +153,12 @@ class CLIPDemo:
             print('_________________________')
             top_k -= 1
             metric_name = "top" + str(output_num) + "_zeroshot_" + str((output_num - top_k))
-            # mlflow.log_metrics({
-                # metric_name: float(sim),
-            # })
+            mlflow.log_metrics({
+                metric_name: float(sim),
+            })
             if top_k == 0:
                 # mlflow: end tracking
-                # mlflow.end_run()
+                mlflow.end_run()
                 break
         plt.imshow(image)
         plt.axis('off')
@@ -181,10 +180,10 @@ class CLIPDemo:
         image_embedding = self.image_query_embedding(image)
         values, indices = self.most_similars(image_embedding, self.text_embeddings)
         # mlflow: stop active runs if any
-        # if mlflow.active_run():
-        #     mlflow.end_run()
+        if mlflow.active_run():
+            mlflow.end_run()
         # mlflow:track run
-        # mlflow.start_run()
+        mlflow.start_run()
         for i, sim in zip(indices, torch.softmax(values, dim=0)):
             output_dict[f'Rank-{abs(top_k - output_num) + 1}'] = {
               'Probability':float(sim),
@@ -192,15 +191,16 @@ class CLIPDemo:
             }
             top_k -= 1
             metric_name = "top" + str(output_num) + "_" + str((output_num - top_k))
-            # mlflow.log_metrics({
-            #     metric_name: float(sim),
-            # })
+            mlflow.log_metrics({
+                metric_name: float(sim),
+            })
 
             if top_k == 0:
                 # mlflow: end tracking
-                # mlflow.end_run()
+                mlflow.end_run()
                 break
         return output_dict
+
 
 search_demo = CLIPDemo(vision_model, text_model, tokenizer)
 search_demo.compute_text_embeddings(test_df.label.tolist())
@@ -220,9 +220,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.post("/predict")
 def prediction_api(image: UploadFile = File (...)):
   output =  search_demo.predict(image)
   return output
-
-# uvicorn.run(app , host="0.0.0.0", port=8000)
