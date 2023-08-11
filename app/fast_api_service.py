@@ -306,7 +306,7 @@ class CLIPDemo:
         # top5_1 = Gauge('top5_1', 'top5 1')
         for i, sim in zip(indices, torch.softmax(values, dim=0)):
             output_dict[f'Rank-{abs(top_k - output_num) + 1}'] = {
-                'Probability': float(sim),
+                'Probability': float(sim)*100 ,
                 'label': self.text[i]
             }
             top_k -= 1
@@ -315,7 +315,7 @@ class CLIPDemo:
             # if((output_num - top_k)==1):
             #     top5_1.set(float(sim)*1000)
             mlflow.log_metrics({
-                metric_name: float(sim)*1000,
+                metric_name: float(sim)*100,
             })
 
             if top_k == 0:
@@ -406,5 +406,6 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
             "rank_3_specific": output_specific["Rank-3"],
             "rank_4_specific": output_specific["Rank-4"],
             "rank_5_specific": output_specific["Rank-5"],
+            "image":image
         },
     )
