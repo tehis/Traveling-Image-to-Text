@@ -19,8 +19,3 @@ RUN pip install -r requirements.txt
 COPY ./fast_api_service.py /code/fast_api_service.py
 
 CMD ["uvicorn", "fast_api_service:app", "--host", "0.0.0.0", "--port", "8000"]
-# COPY ./run_mlflow_and_fastapi.sh /code/app/run_mlflow_and_fastapi.sh
-# RUN chmod +x /code/app/run_mlflow_and_fastapi.sh
-
-
-# CMD /code/app/run_mlflow_and_fastapi.sh
