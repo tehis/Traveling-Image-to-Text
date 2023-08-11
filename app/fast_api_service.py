@@ -246,7 +246,7 @@ class CLIPDemo:
 
 
 search_demo = CLIPDemo(vision_model, text_model, tokenizer)
-# search_demo.compute_text_embeddings(test_df.label.tolist())
+search_demo.compute_text_embeddings(test_df.label.tolist())
 
 
 app = FastAPI()
