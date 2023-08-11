@@ -119,6 +119,12 @@
         width: 100% !important
          
       }
+      tr{
+        margin-bottom: 2px;
+      }
+      tr , td{
+        vertical-align: top !important
+      }
     </style>
   </head>
   <body>
@@ -131,7 +137,7 @@
         <div>
           <table id="top">
             <tr>
-              <th>Probability</th>
+              <th >Probability</th>
               <th id="right">General Details Text</th>
             </tr>
             <tr>
@@ -153,6 +159,10 @@
             <tr>
               <td>{{rank_5_general["Probability"]}}</td>
               <td>{{rank_5_general["label"]}}</td>
+            </tr>
+            <tr id="top-table">
+              <td ></td>
+              <td ></td>
             </tr>
           <!-- </table> -->
         <!-- <br> -->
