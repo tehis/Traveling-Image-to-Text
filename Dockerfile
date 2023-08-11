@@ -15,6 +15,5 @@ COPY ./requirements.txt /code/requirements.txt
 # RUN  pip install  --trusted-host https://pypi.mirrors.ustc.edu.cn/ -i https://pypi.mirrors.ustc.edu.cn/simple/ -r /code/requirements.txt
 RUN pip install -r requirements.txt
 
-COPY ./fast_api_service.py /code/fast_api_service.py
-
-CMD ["uvicorn", "fast_api_service:app", "--host", "0.0.0.0", "--port", "8000"]
+COPY ./app /code/app 
+CMD ["uvicorn", "app.fast_api_service:app", "--host", "0.0.0.0", "--port", "8000"]
