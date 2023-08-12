@@ -415,14 +415,6 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
     output_specific = search_demo_specific.predict(image.copy(), "Specific_Label")
 
     return templates.TemplateResponse(
-        # "result.html", {
-        #     "request": request,
-        #     "rank_1": {"Probability": 1, "label": "salgijfgg "},
-        #     "rank_2": {"Probability": 1.23, "label": "sgdghsalgijfgg "},
-        #     "rank_3": {"Probability": 0.245, "label": "salg dfg ggdhijfgg "},
-        #     "rank_4": {"Probability": 0.34545645, "label": "salgijdfghgh dgsh fgg dlfgje gmoejqojeogmoe;mg joetjmgo;wtjot tjii "},
-        #     "rank_5": {"Probability": 0.0000035, "label": "salgijfglegkjds t jeg;ojh;iogsj orwhjio;THkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk PJRTHJ RTHJ'WHJO'HJRG J;ORTIJHROIRGJHOJ jmrojphtrg dfsh gfh dsfh fsh \n adryyt "},
-        # }
         "result.html",
         {
             "request": request,
@@ -436,7 +428,6 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
             "rank_3_specific": output_specific["Rank-3"],
             "rank_4_specific": output_specific["Rank-4"],
             "rank_5_specific": output_specific["Rank-5"],
-            # "image":image
         },
     )
 
@@ -449,14 +440,7 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
     output_specific = search_demo_specific.predict(image.copy(), "Specific_Label")
 
     return templates.TemplateResponse(
-        # "result.html", {
-        #     "request": request,
-        #     "rank_1": {"Probability": 1, "label": "salgijfgg "},
-        #     "rank_2": {"Probability": 1.23, "label": "sgdghsalgijfgg "},
-        #     "rank_3": {"Probability": 0.245, "label": "salg dfg ggdhijfgg "},
-        #     "rank_4": {"Probability": 0.34545645, "label": "salgijdfghgh dgsh fgg dlfgje gmoejqojeogmoe;mg joetjmgo;wtjot tjii "},
-        #     "rank_5": {"Probability": 0.0000035, "label": "salgijfglegkjds t jeg;ojh;iogsj orwhjio;THkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk PJRTHJ RTHJ'WHJO'HJRG J;ORTIJHROIRGJHOJ jmrojphtrg dfsh gfh dsfh fsh \n adryyt "},
-        # }
+        "result.html",
         {
             "request": request,
             "rank_1_general": output_general["Rank-1"],
@@ -469,6 +453,5 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
             "rank_3_specific": output_specific["Rank-3"],
             "rank_4_specific": output_specific["Rank-4"],
             "rank_5_specific": output_specific["Rank-5"],
-            # "image":image
         },
     )
