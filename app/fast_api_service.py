@@ -32,7 +32,6 @@ gdown.cached_download(
     "https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG",
     "/var/lib/shadow-data/",
 )
-# Download text_embeddings_specific.pt
 gdown.download(
     "https://drive.google.com/uc?export=download&confirm=pbef&id=1kCdvvY60S_FSvLPOLsfcqb8ZpvSn6J-8",
     "/var/lib/shadow-data/",
@@ -46,7 +45,7 @@ MAX_LEN = 80
 tokenizer = AutoTokenizer.from_pretrained("roberta-base")
 
 
-test_df_general = pd.read_csv("/var/lib/shadow-data/text_embeddings_general_no_finetune.csv")
+test_df_general = pd.read_csv("/var/lib/shadow-data/test_set_general.csv")
 
 
 class VisionDataset(Dataset):
