@@ -31,88 +31,93 @@ gdown.cached_download(
     "https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG",
     "/var/lib/data/",
 )
-# Download supervised_test_set.csv
-gdown.download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1NoAluvhq4Z8A0m9TV1gfpxBq8sPgNap7",
-    "/var/lib/data/",
-)
+# # Download supervised_test_set.csv
+# gdown.download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1NoAluvhq4Z8A0m9TV1gfpxBq8sPgNap7",
+#     "/var/lib/data/",
+# )
 
-# Download text_model folder content
-if not os.path.exists("/var/lib/data/text_model_general_label"):
-    os.mkdir("/var/lib/data/text_model_general_label")
-gdown.cached_download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1-6ThDz5S7GZeTtP74c7B4TkZ1vKS2sP6",
-    "/var/lib/data/text_model_general_label/config.json",
-)
-gdown.cached_download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1-5L29XnzokoHMfMEvw7wZb6fGc5j1O6p",
-    "/var/lib/data/text_model_general_label/pytorch_model.bin",
-)
-
-
-# Download vision_model folder content
-if not os.path.exists("/var/lib/data/vision_model_general_label"):
-    os.mkdir("/var/lib/data/vision_model_general_label")
-gdown.cached_download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1--Akn08LVreaaInW6Dsa8hw6FEF7GWFP",
-    "/var/lib/data/vision_model_general_label/config.json",
-)
-gdown.cached_download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1--eKcoWllY3pNdJckVLaGyuSmRn-KrI-",
-    "/var/lib/data/vision_model_general_label/pytorch_model.bin",
-)
-
-# Download text_model folder content for specific label
-if not os.path.exists("/var/lib/data/text_model_specific_label"):
-    os.mkdir("/var/lib/data/text_model_specific_label")
-gdown.cached_download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1-0P8fKqWHFQfolSeR0XlCk9wtBK_DBvC",
-    "/var/lib/data/text_model_specific_label/config.json",
-)
-gdown.cached_download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1-33EKuSDdU6Y4RDMg07r6SThmThtAp62",
-    "/var/lib/data/text_model_specific_label/pytorch_model.bin",
-)
+# # Download text_model folder content
+# if not os.path.exists("/var/lib/data/text_model_general_label"):
+#     os.mkdir("/var/lib/data/text_model_general_label")
+# gdown.cached_download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1-6ThDz5S7GZeTtP74c7B4TkZ1vKS2sP6",
+#     "/var/lib/data/text_model_general_label/config.json",
+# )
+# gdown.cached_download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1-5L29XnzokoHMfMEvw7wZb6fGc5j1O6p",
+#     "/var/lib/data/text_model_general_label/pytorch_model.bin",
+# )
 
 
-# Download vision_model folder content for specific label
-if not os.path.exists("/var/lib/data/vision_model_specific_label"):
-    os.mkdir("/var/lib/data/vision_model_specific_label")
-gdown.cached_download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1-9YYdlvkMP1dx8Ps6y1IpwnFBDiclIUY",
-    "/var/lib/data/vision_model_specific_label/config.json",
-)
-gdown.cached_download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1-ECAI3nwRL78YVd-6d7EECKepwes59KB",
-    "/var/lib/data/vision_model_specific_label/pytorch_model.bin",
-)
+# # Download vision_model folder content
+# if not os.path.exists("/var/lib/data/vision_model_general_label"):
+#     os.mkdir("/var/lib/data/vision_model_general_label")
+# gdown.cached_download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1--Akn08LVreaaInW6Dsa8hw6FEF7GWFP",
+#     "/var/lib/data/vision_model_general_label/config.json",
+# )
+# gdown.cached_download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1--eKcoWllY3pNdJckVLaGyuSmRn-KrI-",
+#     "/var/lib/data/vision_model_general_label/pytorch_model.bin",
+# )
 
-# Download text_embeddings_general.pt
-gdown.download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1isO8_XFYvKvvJh8adeGRO7tGlWDKHpzS",
-    "/var/lib/data/",
-)
+# # Download text_model folder content for specific label
+# if not os.path.exists("/var/lib/data/text_model_specific_label"):
+#     os.mkdir("/var/lib/data/text_model_specific_label")
+# gdown.cached_download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1-0P8fKqWHFQfolSeR0XlCk9wtBK_DBvC",
+#     "/var/lib/data/text_model_specific_label/config.json",
+# )
+# gdown.cached_download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1-33EKuSDdU6Y4RDMg07r6SThmThtAp62",
+#     "/var/lib/data/text_model_specific_label/pytorch_model.bin",
+# )
+
+
+# # Download vision_model folder content for specific label
+# if not os.path.exists("/var/lib/data/vision_model_specific_label"):
+#     os.mkdir("/var/lib/data/vision_model_specific_label")
+# gdown.cached_download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1-9YYdlvkMP1dx8Ps6y1IpwnFBDiclIUY",
+#     "/var/lib/data/vision_model_specific_label/config.json",
+# )
+# gdown.cached_download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1-ECAI3nwRL78YVd-6d7EECKepwes59KB",
+#     "/var/lib/data/vision_model_specific_label/pytorch_model.bin",
+# )
+
+# # Download text_embeddings_general.pt
+# gdown.download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1isO8_XFYvKvvJh8adeGRO7tGlWDKHpzS",
+#     "/var/lib/data/",
+# )
+
+# # Download text_embeddings_specific.pt
+# gdown.download(
+#     "https://drive.google.com/uc?export=download&confirm=pbef&id=1yfrAp9dHgvbaVUxjsRagGayq4zhvLvsi",
+#     "/var/lib/data/",
+# )
 
 # Download text_embeddings_specific.pt
 gdown.download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1yfrAp9dHgvbaVUxjsRagGayq4zhvLvsi",
+    "https://drive.google.com/uc?export=download&confirm=pbef&id=1kCdvvY60S_FSvLPOLsfcqb8ZpvSn6J",
     "/var/lib/data/",
 )
 
+# vision_model_general = CLIPVisionModel.from_pretrained(
+#     "/var/lib/data/vision_model_general_label", local_files_only=True
+# )
+# text_model_general = AutoModel.from_pretrained(
+#     "/var/lib/data/text_model_general_label", local_files_only=True
+# )
 
-vision_model_general = CLIPVisionModel.from_pretrained(
-    "/var/lib/data/vision_model_general_label", local_files_only=True
-)
-text_model_general = AutoModel.from_pretrained(
-    "/var/lib/data/text_model_general_label", local_files_only=True
-)
-
-vision_model_specific = CLIPVisionModel.from_pretrained(
-    "/var/lib/data/vision_model_specific_label", local_files_only=True
-)
-text_model_specific = AutoModel.from_pretrained(
-    "/var/lib/data/text_model_specific_label", local_files_only=True
-)
+# vision_model_specific = CLIPVisionModel.from_pretrained(
+#     "/var/lib/data/vision_model_specific_label", local_files_only=True
+# )
+# text_model_specific = AutoModel.from_pretrained(
+#     "/var/lib/data/text_model_specific_label", local_files_only=True
+# )
 
 MEAN = torch.tensor([0.48145466, 0.4578275, 0.40821073])
 STD = torch.tensor([0.26862954, 0.26130258, 0.27577711])
@@ -122,7 +127,7 @@ tokenizer = AutoTokenizer.from_pretrained("roberta-base")
 
 
 test_df_general = pd.read_csv("/var/lib/data/test_set_general.csv")
-test_df_specific = pd.read_csv("/var/lib/data/supervised_test_set.csv")
+# test_df_specific = pd.read_csv("/var/lib/data/supervised_test_set.csv")
 
 
 class VisionDataset(Dataset):
@@ -339,21 +344,48 @@ class CLIPDemo:
                 break
         return output_dict
 
+def clip_wraper_creator():
+    """create a dummy CLIPModel to wrap text and vision encoders in order to use CLIPTrainer"""
+    config = {'num_hidden_layers': 0,
+              'max_position_embeddings': 0,
+              'vocab_size': 0,
+              'hidden_size': 1,
+              'patch_size': 1,
+              }
+    DUMMY_CONFIG = CLIPConfig(text_config_dict=config,
+                              vision_config_dict=config)
+    clip = CLIPModel(config=DUMMY_CONFIG)
+    # convert projectors to Identity
+    clip.text_projection = nn.Identity()
+    clip.visual_projection = nn.Identity()
+    return clip
 
-search_demo_general = CLIPDemo(
-    vision_model_general, text_model_general, tokenizer)
-search_demo_specific = CLIPDemo(
-    vision_model_specific, text_model_specific, tokenizer)
+TEXT_MODEL = 'roberta-base'
+IMAGE_MODEL = 'openai/clip-vit-base-patch32'
+clip_raw = clip_wraper_creator()
+vision_encoder_raw = CLIPVisionModel.from_pretrained(IMAGE_MODEL)
+text_encoder_raw = AutoModel.from_pretrained(TEXT_MODEL)
+
+clip_raw.text_model = text_encoder_raw
+clip_raw.vision_model = vision_encoder_raw
+
+
+search_demo_raw = CLIPDemo(clip_raw.vision_model, clip_raw.text_model, tokenizer)
+
+# search_demo_general = CLIPDemo(
+#     vision_model_general, text_model_general, tokenizer)
+# search_demo_specific = CLIPDemo(
+#     vision_model_specific, text_model_specific, tokenizer)
 # search_demo_general.compute_text_embeddings(test_df_general.label.tolist())
 # search_demo_specific.compute_text_embeddings(test_df_specific.label.tolist())
 
-search_demo_general.text = test_df_general.label.tolist()
-search_demo_general.text_embeddings = torch.load(
-    '/var/lib/data/text_embeddings_general.pt')
+# search_demo_general.text = test_df_general.label.tolist()
+search_demo_raw.text_embeddings = torch.load(
+    '/var/lib/data/text_embeddings_general_no_finetune.pt')
 
-search_demo_specific.text = test_df_specific.label.tolist()
-search_demo_specific.text_embeddings = torch.load(
-    '/var/lib/data/text_embeddings_specific.pt')
+# search_demo_specific.text = test_df_specific.label.tolist()
+# search_demo_specific.text_embeddings = torch.load(
+#     '/var/lib/data/text_embeddings_specific.pt')
 
 
 app = FastAPI()
@@ -404,8 +436,8 @@ def upload(request: Request):
 def prediction_api(request: Request, image: UploadFile = File(...)):
     image_bytes = image.file.read()
     image = Image.open(io.BytesIO(image_bytes))
-    output_general = search_demo_general.predict(image.copy(), "General_Label")
-    output_specific = search_demo_specific.predict(image.copy(), "Specific_Label")
+    output_general = search_demo_raw.predict(image.copy(), "General_Label")
+    # output_specific = search_demo_specific.predict(image.copy(), "Specific_Label")
 
     return templates.TemplateResponse(
         # "result.html", {
@@ -424,11 +456,11 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
             "rank_3_general": output_general["Rank-3"],
             "rank_4_general": output_general["Rank-4"],
             "rank_5_general": output_general["Rank-5"],
-            "rank_1_specific": output_specific["Rank-1"],
-            "rank_2_specific": output_specific["Rank-2"],
-            "rank_3_specific": output_specific["Rank-3"],
-            "rank_4_specific": output_specific["Rank-4"],
-            "rank_5_specific": output_specific["Rank-5"],
+            # "rank_1_specific": output_specific["Rank-1"],
+            # "rank_2_specific": output_specific["Rank-2"],
+            # "rank_3_specific": output_specific["Rank-3"],
+            # "rank_4_specific": output_specific["Rank-4"],
+            # "rank_5_specific": output_specific["Rank-5"],
             # "image":image
         },
     )
