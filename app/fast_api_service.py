@@ -278,16 +278,21 @@ class CLIPDemo:
         top_k = 5
         output_num = 5
         output_dict = {}
-        # mlflow: stop active runs if any
+        experiment_name = str(use_case) 
+        mlflow.set_experiment(experiment_name)
         if mlflow.active_run():
-            mlflow.end_run()
+            # mlflow.end_run()
+            skip = True
+        else:
+            mlflow.start_run(run_name=str(use_case))
+        # mlflow:track run
         # mlflow:track run
         # tracking_uri = ""
         # mlflow.set_tracking_uri(tracking_uri)
         # experiment_name = str(use_case) +"_"+ str(time.time())
-        experiment_name = str(use_case) 
-        mlflow.set_experiment(experiment_name)
-        mlflow.start_run(run_name=str(use_case) +"_"+ str(datetime.today().strftime('%Y-%m-%d %H:%M:%S')))
+        
+        
+        # mlflow.start_run(run_name=str(use_case) +"_"+ str(datetime.today().strftime('%Y-%m-%d %H:%M:%S')))
         # monitor hardware usage
         cpu_percent, memory_percent = self.monitor_hardware()
         start_time = time.time()
