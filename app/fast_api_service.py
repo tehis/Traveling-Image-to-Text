@@ -101,7 +101,7 @@ gdown.cached_download(
 
 # Download text_embeddings_specific.pt
 gdown.download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1kCdvvY60S_FSvLPOLsfcqb8ZpvSn6J",
+    "https://drive.google.com/uc?export=download&confirm=pbef&id=1kCdvvY60S_FSvLPOLsfcqb8ZpvSn6J-8",
     "/var/lib/data/",
 )
 
