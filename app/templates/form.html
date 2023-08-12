@@ -86,7 +86,9 @@
     <body>
       <div class="main-block">
         <h1>Upload Image</h1>
-        <form id="form1" action="/predict" method="POST" enctype="multipart/form-data">
+        <!-- <form id="form1" action="/predict" method="POST" enctype="multipart/form-data"> -->
+        <form id="form1" enctype="multipart/form-data">
+
           <hr>
           <input type="file" name="image" id="name" required/>
           <hr>
@@ -97,31 +99,48 @@
             const predictButton = document.getElementById("predictButton");
             const imageForm = document.getElementById("form1");
             const imageInput = document.getElementById("name");
-    
-            predictButton.addEventListener("click", async () => {
+            
+
+            predictButton.addEventListener("click", () => {
                 // Make sure an image is selected before proceeding
                 if (imageInput.files.length > 0) {
+                     // Create a dynamic form for the second POST request
                     const formData = new FormData(imageForm);
-    
-                    // Send the first POST request to /predict
-                    await fetch("/predict", {
-                        method: "POST",
-                        body: formData
-                    });
-    
-                    // Send the second POST request to /predict2
-                    await fetch("/predict2", {
-                        method: "POST",
-                        body: formData
-                    });
-    
-                    // Optionally, you can add code here to handle success or errors
-    
+                    const form1 = document.createElement("form");
+                    form1.action = "/predict";
+                    form1.method = "POST";
+                    form1.enctype = "multipart/form-data";
+
+                    // Clone the image input from the original form
+                    const clonedImageInput = imageInput.cloneNode(true);
+                    form1.appendChild(clonedImageInput);
+
+                    // Append the form to the body and submit it
+                    document.body.appendChild(form1);
+                    form1.submit();
+                  
+                    
+
+                    // Create a dynamic form for the second POST request
+                    const form2 = document.createElement("form");
+                    form2.action = "/predict2";
+                    form2.method = "POST";
+                    form2.enctype = "multipart/form-data";
+
+                    // Clone the image input from the original form
+                    const clonedImageInput2 = imageInput.cloneNode(true);
+                    form2.appendChild(clonedImageInput2);
+
+                    // Append the form to the body and submit it
+                    document.body.appendChild(form2);
+                    form2.submit();
+                   
                 } else {
                     alert("Please select an image to predict.");
                 }
             });
           </script>
+            
         </form>
       </div>
     </body>
