@@ -274,7 +274,7 @@ class CLIPDemo:
         memory_percent = psutil.virtual_memory().percent
         return cpu_percent , memory_percent
     
-    def predict(self, image, use_case , run_id):
+    def predict(self, image, use_case):
         top_k = 5
         output_num = 5
         output_dict = {}
@@ -284,7 +284,7 @@ class CLIPDemo:
         # mlflow:track run
         # tracking_uri = ""
         # mlflow.set_tracking_uri(tracking_uri)
-        # experiment_name = str(use_case) +"_"+ str(time.time())
+        # experiment_name = + str(use_case) +"_"+ str(time.time())
         
         
         # mlflow.start_run(run_name=str(use_case) +"_"+ str(datetime.today().strftime('%Y-%m-%d %H:%M:%S')))
@@ -297,12 +297,12 @@ class CLIPDemo:
             image_embedding, self.text_embeddings)
         latency = time.time() - start_time
         params = {
-            "top_k_predictor": top_k,
-            "batch_size": self.batch_size,
-            "device": self.device,
-            "use_case": use_case
+            "top_k_predictor"+"_"+ str(use_case): top_k,
+            "batch_size"+"_"+ str(use_case): self.batch_size,
+            "device"+"_"+ str(use_case): self.device,
+            # "use_case"+ str(use_case): use_case
         }
-        mlflow.log_params(run_id ,params)
+        mlflow.log_params(params)
         # top5_1 = Gauge('top5_1', 'top5 1')
         for i, sim in zip(indices, torch.softmax(values, dim=0)):
             output_dict[f'Rank-{abs(top_k - output_num) + 1}'] = {
@@ -310,18 +310,17 @@ class CLIPDemo:
                 'label': self.text[i]
             }
             top_k -= 1
-            metric_name = "top" + str(output_num) + \
-                "_" + str((output_num - top_k))
+            metric_name = "top" + str(output_num) +"_" + str((output_num - top_k))+"_"+ str(use_case)
             # if((output_num - top_k)==1):
             #     top5_1.set(float(sim)*1000)
-            mlflow.log_metrics(run_id ,{
+            mlflow.log_metrics({
                 metric_name: float(sim)*100,
             })
 
             if top_k == 0:
-                mlflow.log_metric(run_id , "CPU Usage", cpu_percent)
-                mlflow.log_metric(run_id ,"Memory Usage", memory_percent)
-                mlflow.log_metric(run_id ,"Latency", latency)
+                mlflow.log_metric("CPU Usage"+"_"+ str(use_case), cpu_percent)
+                mlflow.log_metric("Memory Usage"+"_"+ str(use_case), memory_percent)
+                mlflow.log_metric("Latency"+"_"+ str(use_case), latency)
                 # mlflow: end tracking
                 # mlflow.pytorch.log_model(self.vision_encoder, "vision_encoder")
                 # mlflow.pytorch.log_model(self.vision_encoder, "vision_encoder")
@@ -366,21 +365,21 @@ app = FastAPI()
 # mlflow.set_experiment(experiment_name)
 # mlflow.start_run(run_name=str(use_case))
 
-EXPERIMENT_NAME = "infrence runs"
+EXPERIMENT_NAME = "infrence expriment"
 # EXPERIMENT_ID = mlflow.create_experiment(EXPERIMENT_NAME)
-RUN_NAME_General = "General_Label"
+RUN_NAME_General = "infrence runs"
 mlflow.set_experiment(EXPERIMENT_NAME)
-run_General = mlflow.start_run( run_name=RUN_NAME_General)
+run_General = mlflow.start_run(run_name=RUN_NAME_General)
 # run_General = mlflow.start_run(run_name=RUN_NAME_General)
 RUN_ID_General = run_General.info.run_id
 
 # EXPERIMENT_NAME_Specific = "Specific_Label"
 # EXPERIMENT_ID_Specific = mlflow.create_experiment(EXPERIMENT_NAME_Specific)
-RUN_NAME_Specific = "Specific_Label"
-mlflow.set_experiment(EXPERIMENT_NAME)
-run_Specific = mlflow.start_run(run_name=RUN_NAME_Specific)
+# RUN_NAME_Specific = "Specific_Label"
+# mlflow.set_experiment(EXPERIMENT_NAME)
 # run_Specific = mlflow.start_run(run_name=RUN_NAME_Specific)
-RUN_ID_Specific = run_Specific.info.run_id
+# run_Specific = mlflow.start_run(run_name=RUN_NAME_Specific)
+# RUN_ID_Specific = run_Specific.info.run_id
 
 origins = ["http://localhost", "http://localhost:8000"]
 
@@ -405,8 +404,8 @@ def upload(request: Request):
 def prediction_api(request: Request, image: UploadFile = File(...)):
     image_bytes = image.file.read()
     image = Image.open(io.BytesIO(image_bytes))
-    output_general = search_demo_general.predict(image.copy(), "General_Label" , RUN_ID_General)
-    output_specific = search_demo_specific.predict(image.copy(), "Specific_Label" , RUN_ID_Specific)
+    output_general = search_demo_general.predict(image.copy(), "General_Label")
+    output_specific = search_demo_specific.predict(image.copy(), "Specific_Label")
 
     return templates.TemplateResponse(
         # "result.html", {
