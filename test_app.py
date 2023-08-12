@@ -8,7 +8,7 @@ def test_latency(image_path: str):
     with open(image_path, "rb") as file:
         files = {"image": file}
         response = requests.post(
-            "https://traveling-guide.darkube.app/predict", files=files
+            "https://shadow-traveling-guide.darkube.app/predict", files=files
         )
 
     assert response.status_code == 200
