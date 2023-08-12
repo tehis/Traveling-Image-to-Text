@@ -366,16 +366,18 @@ app = FastAPI()
 # mlflow.set_experiment(experiment_name)
 # mlflow.start_run(run_name=str(use_case))
 
-EXPERIMENT_NAME_General = "General_Label"
-EXPERIMENT_ID_General = mlflow.create_experiment(EXPERIMENT_NAME_General)
+EXPERIMENT_NAME = "infrence runs"
+EXPERIMENT_ID = mlflow.create_experiment(EXPERIMENT_NAME)
 RUN_NAME_General = "General_Label"
-run_General = mlflow.start_run(experiment_id=EXPERIMENT_ID_General, run_name=RUN_NAME_General)
+run_General = mlflow.start_run(experiment_id=EXPERIMENT_ID, run_name=RUN_NAME_General)
+# run_General = mlflow.start_run(run_name=RUN_NAME_General)
 RUN_ID_General = run_General.info.run_id
 
-EXPERIMENT_NAME_Specific = "Specific_Label"
-EXPERIMENT_ID_Specific = mlflow.create_experiment(EXPERIMENT_NAME_Specific)
+# EXPERIMENT_NAME_Specific = "Specific_Label"
+# EXPERIMENT_ID_Specific = mlflow.create_experiment(EXPERIMENT_NAME_Specific)
 RUN_NAME_Specific = "Specific_Label"
-run_Specific = mlflow.start_run(experiment_id=EXPERIMENT_ID_Specific, run_name=RUN_NAME_Specific)
+run_Specific = mlflow.start_run(experiment_id=EXPERIMENT_ID, run_name=RUN_NAME_Specific)
+# run_Specific = mlflow.start_run(run_name=RUN_NAME_Specific)
 RUN_ID_Specific = run_Specific.info.run_id
 
 origins = ["http://localhost", "http://localhost:8000"]
