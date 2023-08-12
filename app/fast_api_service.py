@@ -28,12 +28,12 @@ from transformers import (
 
 
 # Download test_set_general.csv
-gdown.cached_download(
+gdown.download(
     "https://drive.google.com/uc?export=download&confirm=pbef&id=1v5G6du9Lq9RPk0n6lterAiKkqaVKQ-qG",
     "/var/lib/shadow-data/",
 )
 # text embedding no finetune
-gdown.cached_download(
+gdown.download(
     "https://drive.google.com/uc?export=download&confirm=pbef&id=1kCdvvY60S_FSvLPOLsfcqb8ZpvSn6J-8",
     "/var/lib/shadow-data/",
 )
