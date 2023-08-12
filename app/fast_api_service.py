@@ -274,18 +274,12 @@ class CLIPDemo:
         memory_percent = psutil.virtual_memory().percent
         return cpu_percent , memory_percent
     
-    def predict(self, image, use_case):
+    def predict(self, image, use_case , run_id):
         top_k = 5
         output_num = 5
         output_dict = {}
         
-        if mlflow.active_run():
-            # mlflow.end_run()
-            skip = True
-        else:
-            experiment_name = str(use_case) 
-            mlflow.set_experiment(experiment_name)
-            mlflow.start_run(run_name=str(use_case))
+        
         # mlflow:track run
         # mlflow:track run
         # tracking_uri = ""
@@ -308,7 +302,7 @@ class CLIPDemo:
             "device": self.device,
             "use_case": use_case
         }
-        mlflow.log_params(params)
+        mlflow.log_params(run_id ,params)
         # top5_1 = Gauge('top5_1', 'top5 1')
         for i, sim in zip(indices, torch.softmax(values, dim=0)):
             output_dict[f'Rank-{abs(top_k - output_num) + 1}'] = {
@@ -320,14 +314,14 @@ class CLIPDemo:
                 "_" + str((output_num - top_k))
             # if((output_num - top_k)==1):
             #     top5_1.set(float(sim)*1000)
-            mlflow.log_metrics({
+            mlflow.log_metrics(run_id ,{
                 metric_name: float(sim)*100,
             })
 
             if top_k == 0:
-                mlflow.log_metric("CPU Usage", cpu_percent)
-                mlflow.log_metric("Memory Usage", memory_percent)
-                mlflow.log_metric("Latency", latency)
+                mlflow.log_metric(run_id , "CPU Usage", cpu_percent)
+                mlflow.log_metric(run_id ,"Memory Usage", memory_percent)
+                mlflow.log_metric(run_id ,"Latency", latency)
                 # mlflow: end tracking
                 # mlflow.pytorch.log_model(self.vision_encoder, "vision_encoder")
                 # mlflow.pytorch.log_model(self.vision_encoder, "vision_encoder")
@@ -364,6 +358,26 @@ search_demo_specific.text_embeddings = torch.load(
 
 
 app = FastAPI()
+# # if mlflow.active_run():
+# #             # mlflow.end_run()
+# #             skip = True
+# #         else:
+# experiment_name = str(use_case) 
+# mlflow.set_experiment(experiment_name)
+# mlflow.start_run(run_name=str(use_case))
+
+EXPERIMENT_NAME_General = "General_Label"
+EXPERIMENT_ID_General = mlflow.create_experiment(EXPERIMENT_NAME_General)
+RUN_NAME_General = "General_Label"
+run_General = mlflow.start_run(experiment_id=EXPERIMENT_ID_General, run_name=RUN_NAME_General)
+RUN_ID_General = run_General.info.run_id
+
+EXPERIMENT_NAME_Specific = "Specific_Label"
+EXPERIMENT_ID_Specific = mlflow.create_experiment(EXPERIMENT_NAME_Specific)
+RUN_NAME_Specific = "Specific_Label"
+run_Specific = mlflow.start_run(experiment_id=EXPERIMENT_ID_Specific, run_name=RUN_NAME_Specific)
+RUN_ID_Specific = run_Specific.info.run_id
+
 origins = ["http://localhost", "http://localhost:8000"]
 
 app.add_middleware(
@@ -387,8 +401,8 @@ def upload(request: Request):
 def prediction_api(request: Request, image: UploadFile = File(...)):
     image_bytes = image.file.read()
     image = Image.open(io.BytesIO(image_bytes))
-    output_general = search_demo_general.predict(image.copy(), "General_Label")
-    output_specific = search_demo_specific.predict(image.copy(), "Specific_Label")
+    output_general = search_demo_general.predict(image.copy(), "General_Label" , RUN_ID_General)
+    output_specific = search_demo_specific.predict(image.copy(), "Specific_Label" , RUN_ID_Specific)
 
     return templates.TemplateResponse(
         # "result.html", {
