@@ -341,7 +341,7 @@ class CLIPDemo:
                 #     registered_model_name="text_encoder",
                 #     artifact_path="text_encoder"
                 # )
-                mlflow.end_run()
+                # mlflow.end_run()
                 break
         return output_dict
 
