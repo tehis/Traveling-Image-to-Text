@@ -86,7 +86,7 @@
     <body>
       <div class="main-block">
         <h1>Upload Image</h1>
-        <form id="form1" action="/predict" method="POST" enctype="multipart/form-data">
+        <form id="form1" action="/predict2" method="POST" enctype="multipart/form-data">
           <hr>
           <input type="file" name="image" id="name" required/>
           <hr>
@@ -101,7 +101,7 @@
                 // Get the new action URLs
                 // const newAction1 = "new_shadow_url1"; // Change this to the desired URL
 
-                const newAction1 = "/predict2"; // Change this to the desired URL
+                const newAction1 = "/predict"; // Change this to the desired URL
                 // const newAction2 = "new_action_url2"; // Change this to the desired URL
                 
                 // Update the action attributes of the forms
@@ -111,7 +111,7 @@
                 form1.submit();
                 
                 // Update the action attribute back to the original URL if needed
-                form1.action = "/predict"; // Change this back to the original URL
+                form1.action = "/predict2"; // Change this back to the original URL
                 
             });
         </script>
