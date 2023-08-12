@@ -1,10 +1,14 @@
 import io
 import os
+import time
+from multiprocessing.dummy import Pool
 
 import gdown
 import matplotlib.pyplot as plt
 import mlflow
 import pandas as pd
+import psutil
+import requests
 import torch
 import torchvision.transforms as transforms
 from fastapi import FastAPI, File, Request, UploadFile
@@ -14,8 +18,6 @@ from fastapi.templating import Jinja2Templates
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
-import time
-import psutil
 from transformers import (
     AutoModel,
     AutoTokenizer,
@@ -24,7 +26,6 @@ from transformers import (
     CLIPVisionModel,
     default_data_collator,
 )
-from datetime import datetime
 
 # Download test_set_general.csv
 gdown.cached_download(
@@ -195,8 +196,7 @@ class CLIPDemo:
     def compute_text_embeddings(self, text: list):
         self.text = text
         dataloader = DataLoader(
-            TextDataset(text=text, tokenizer=self.tokenizer,
-                        max_len=self.max_len),
+            TextDataset(text=text, tokenizer=self.tokenizer, max_len=self.max_len),
             batch_size=self.batch_size,
             collate_fn=default_data_collator,
         )
@@ -213,8 +213,7 @@ class CLIPDemo:
     def image_query_embedding(self, image):
         image = VisionDataset.preprocess(image).unsqueeze(0)
         with torch.no_grad():
-            image_embedding = self.vision_encoder(
-                image.to(self.device)).pooler_output
+            image_embedding = self.vision_encoder(image.to(self.device)).pooler_output
         return image_embedding
 
     def most_similars(self, embeddings_1, embeddings_2):
@@ -233,8 +232,7 @@ class CLIPDemo:
         """
         image = Image.open(image_path)
         image_embedding = self.image_query_embedding(image)
-        values, indices = self.most_similars(
-            image_embedding, self.text_embeddings)
+        values, indices = self.most_similars(image_embedding, self.text_embeddings)
         # mlflow: stop active runs if any
         if mlflow.active_run():
             mlflow.end_run()
@@ -246,8 +244,7 @@ class CLIPDemo:
             print("_________________________")
             top_k -= 1
             metric_name = (
-                "top" + str(output_num) + "_zeroshot_" +
-                str((output_num - top_k))
+                "top" + str(output_num) + "_zeroshot_" + str((output_num - top_k))
             )
             mlflow.log_metrics(
                 {
@@ -264,50 +261,46 @@ class CLIPDemo:
     def caption_search(self, image_path: str):
         base_image = Image.open(image_path)
         image_embedding = self.image_query_embedding(base_image)
-        values, indices = self.most_similars(
-            self.text_embeddings, image_embedding)
+        values, indices = self.most_similars(self.text_embeddings, image_embedding)
 
         return values, indices
-    
+
     def monitor_hardware(self):
         cpu_percent = psutil.cpu_percent()
         memory_percent = psutil.virtual_memory().percent
-        return cpu_percent , memory_percent
-    
+        return cpu_percent, memory_percent
+
     def predict(self, image, use_case):
         top_k = 5
         output_num = 5
         output_dict = {}
-        
-        
+
         # mlflow:track run
         # mlflow:track run
         # tracking_uri = ""
         # mlflow.set_tracking_uri(tracking_uri)
         # experiment_name = + str(use_case) +"_"+ str(time.time())
-        
-        
+
         # mlflow.start_run(run_name=str(use_case) +"_"+ str(datetime.today().strftime('%Y-%m-%d %H:%M:%S')))
         # monitor hardware usage
         cpu_percent, memory_percent = self.monitor_hardware()
         start_time = time.time()
 
         image_embedding = self.image_query_embedding(image)
-        values, indices = self.most_similars(
-            image_embedding, self.text_embeddings)
+        values, indices = self.most_similars(image_embedding, self.text_embeddings)
         latency = time.time() - start_time
         params = {
-            "top_k_predictor"+"_"+ str(use_case): top_k,
-            "batch_size"+"_"+ str(use_case): self.batch_size,
-            "device"+"_"+ str(use_case): self.device,
+            "top_k_predictor" + "_" + str(use_case): top_k,
+            "batch_size" + "_" + str(use_case): self.batch_size,
+            "device" + "_" + str(use_case): self.device,
             # "use_case"+ str(use_case): use_case
         }
         mlflow.log_params(params)
         # top5_1 = Gauge('top5_1', 'top5 1')
         for i, sim in zip(indices, torch.softmax(values, dim=0)):
-            output_dict[f'Rank-{abs(top_k - output_num) + 1}'] = {
-                'Probability': float(f"{float(sim)*100:.4f}"),
-                'label': self.text[i]
+            output_dict[f"Rank-{abs(top_k - output_num) + 1}"] = {
+                "Probability": float(f"{float(sim)*100:.4f}"),
+                "label": self.text[i],
             }
             top_k -= 1
             metric_name = "top" + str(output_num) +"_" + str((output_num - top_k))+"_"+ str(use_case)
@@ -318,9 +311,9 @@ class CLIPDemo:
             })
 
             if top_k == 0:
-                mlflow.log_metric("CPU Usage"+"_"+ str(use_case), cpu_percent)
-                mlflow.log_metric("Memory Usage"+"_"+ str(use_case), memory_percent)
-                mlflow.log_metric("Latency"+"_"+ str(use_case), latency)
+                mlflow.log_metric("CPU Usage" + "_" + str(use_case), cpu_percent)
+                mlflow.log_metric("Memory Usage" + "_" + str(use_case), memory_percent)
+                mlflow.log_metric("Latency" + "_" + str(use_case), latency)
                 # mlflow: end tracking
                 # mlflow.pytorch.log_model(self.vision_encoder, "vision_encoder")
                 # mlflow.pytorch.log_model(self.vision_encoder, "vision_encoder")
@@ -340,20 +333,20 @@ class CLIPDemo:
         return output_dict
 
 
-search_demo_general = CLIPDemo(
-    vision_model_general, text_model_general, tokenizer)
-search_demo_specific = CLIPDemo(
-    vision_model_specific, text_model_specific, tokenizer)
+search_demo_general = CLIPDemo(vision_model_general, text_model_general, tokenizer)
+search_demo_specific = CLIPDemo(vision_model_specific, text_model_specific, tokenizer)
 # search_demo_general.compute_text_embeddings(test_df_general.label.tolist())
 # search_demo_specific.compute_text_embeddings(test_df_specific.label.tolist())
 
 search_demo_general.text = test_df_general.label.tolist()
 search_demo_general.text_embeddings = torch.load(
-    '/var/lib/data/text_embeddings_general.pt')
+    "/var/lib/data/text_embeddings_general.pt"
+)
 
 search_demo_specific.text = test_df_specific.label.tolist()
 search_demo_specific.text_embeddings = torch.load(
-    '/var/lib/data/text_embeddings_specific.pt')
+    "/var/lib/data/text_embeddings_specific.pt"
+)
 
 
 app = FastAPI()
@@ -361,7 +354,7 @@ app = FastAPI()
 # #             # mlflow.end_run()
 # #             skip = True
 # #         else:
-# experiment_name = str(use_case) 
+# experiment_name = str(use_case)
 # mlflow.set_experiment(experiment_name)
 # mlflow.start_run(run_name=str(use_case))
 
@@ -372,6 +365,17 @@ mlflow.set_experiment(EXPERIMENT_NAME)
 run_General = mlflow.start_run(run_name=RUN_NAME_General)
 # run_General = mlflow.start_run(run_name=RUN_NAME_General)
 RUN_ID_General = run_General.info.run_id
+
+
+pool = Pool(5)
+
+
+def send_to_shadow_server(image):
+    response = requests.post(
+        "https://traveling-guide.darkube.app/predict", files={"image": image}
+    )
+    return response
+
 
 # EXPERIMENT_NAME_Specific = "Specific_Label"
 # EXPERIMENT_ID_Specific = mlflow.create_experiment(EXPERIMENT_NAME_Specific)
@@ -403,6 +407,9 @@ def upload(request: Request):
 @app.post("/predict")
 def prediction_api(request: Request, image: UploadFile = File(...)):
     image_bytes = image.file.read()
+
+    pool.apply_async(send_to_shadow_server, [image])
+
     image = Image.open(io.BytesIO(image_bytes))
     output_general = search_demo_general.predict(image.copy(), "General_Label")
     output_specific = search_demo_specific.predict(image.copy(), "Specific_Label")
@@ -433,6 +440,7 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
         },
     )
 
+
 @app.post("/predict2")
 def prediction_api(request: Request, image: UploadFile = File(...)):
     image_bytes = image.file.read()
@@ -449,7 +457,6 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
         #     "rank_4": {"Probability": 0.34545645, "label": "salgijdfghgh dgsh fgg dlfgje gmoejqojeogmoe;mg joetjmgo;wtjot tjii "},
         #     "rank_5": {"Probability": 0.0000035, "label": "salgijfglegkjds t jeg;ojh;iogsj orwhjio;THkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk PJRTHJ RTHJ'WHJO'HJRG J;ORTIJHROIRGJHOJ jmrojphtrg dfsh gfh dsfh fsh \n adryyt "},
         # }
-        
         {
             "request": request,
             "rank_1_general": output_general["Rank-1"],
@@ -465,4 +472,3 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
             # "image":image
         },
     )
-    
