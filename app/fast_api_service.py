@@ -34,7 +34,7 @@ gdown.download(
 )
 # text embedding no finetune
 gdown.download(
-    "https://drive.google.com/uc?export=download&confirm=pbef&id=1kCdvvY60S_FSvLPOLsfcqb8ZpvSn6J-8",
+    "https://drive.google.com/uc?export=download&confirm=pbef&id=1EEBnOr49WKkpLICCBdb_e02pW_yHF4cr",
     "/var/lib/shadow-data/",
 )
 
