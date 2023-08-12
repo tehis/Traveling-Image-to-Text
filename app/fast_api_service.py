@@ -7,6 +7,7 @@ import mlflow
 import pandas as pd
 import torch
 import torchvision.transforms as transforms
+from torch import nn
 from fastapi import FastAPI, File, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
