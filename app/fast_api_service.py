@@ -365,9 +365,9 @@ app = FastAPI()
 # mlflow.set_experiment(experiment_name)
 # mlflow.start_run(run_name=str(use_case))
 
-EXPERIMENT_NAME = "infrence expriment"
+EXPERIMENT_NAME = "shadow expriment"
 # EXPERIMENT_ID = mlflow.create_experiment(EXPERIMENT_NAME)
-RUN_NAME_General = "infrence runs"
+RUN_NAME_General = "shadow runs"
 mlflow.set_experiment(EXPERIMENT_NAME)
 run_General = mlflow.start_run(run_name=RUN_NAME_General)
 # run_General = mlflow.start_run(run_name=RUN_NAME_General)
