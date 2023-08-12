@@ -278,12 +278,13 @@ class CLIPDemo:
         top_k = 5
         output_num = 5
         output_dict = {}
-        experiment_name = str(use_case) 
-        mlflow.set_experiment(experiment_name)
+        
         if mlflow.active_run():
             # mlflow.end_run()
             skip = True
         else:
+            experiment_name = str(use_case) 
+            mlflow.set_experiment(experiment_name)
             mlflow.start_run(run_name=str(use_case))
         # mlflow:track run
         # mlflow:track run
