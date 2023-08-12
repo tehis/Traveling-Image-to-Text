@@ -86,8 +86,8 @@
     <body>
       <div class="main-block">
         <h1>Upload Image</h1>
-        <!-- <form id="form1" action="/predict" method="POST" enctype="multipart/form-data"> -->
-        <form id="form1" enctype="multipart/form-data">
+        <form id="form1" action="/predict" method="POST" enctype="multipart/form-data">
+        <!-- <form id="form1" enctype="multipart/form-data"> -->
 
           <hr>
           <input type="file" name="image" id="name" required/>
@@ -100,8 +100,8 @@
             const imageForm = document.getElementById("form1");
             const imageInput = document.getElementById("name");
             
-
-            predictButton.addEventListener("click", () => {
+            imageForm.addEventListener("submit", (event) => {
+                event.preventDefault()
                 // Make sure an image is selected before proceeding
                 if (imageInput.files.length > 0) {
                      // Create a dynamic form for the second POST request

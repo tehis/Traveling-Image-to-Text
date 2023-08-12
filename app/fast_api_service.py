@@ -449,7 +449,7 @@ def prediction_api(request: Request, image: UploadFile = File(...)):
         #     "rank_4": {"Probability": 0.34545645, "label": "salgijdfghgh dgsh fgg dlfgje gmoejqojeogmoe;mg joetjmgo;wtjot tjii "},
         #     "rank_5": {"Probability": 0.0000035, "label": "salgijfglegkjds t jeg;ojh;iogsj orwhjio;THkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk PJRTHJ RTHJ'WHJO'HJRG J;ORTIJHROIRGJHOJ jmrojphtrg dfsh gfh dsfh fsh \n adryyt "},
         # }
-        "result2.html",
+        
         {
             "request": request,
             "rank_1_general": output_general["Rank-1"],
