@@ -372,7 +372,7 @@ pool = Pool(5)
 
 def send_to_shadow_server(image):
     response = requests.post(
-        "https://traveling-guide.darkube.app/predict", files={"image": image}
+        "https://shadow-traveling-guide.darkube.app/predict", files={"image": image}
     )
     return response
 
