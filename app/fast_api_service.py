@@ -208,11 +208,13 @@ class CLIPDemo:
             image_embedding, self.text_embeddings)
         latency = time.time() - start_time
         params = {
-            "top_k_predictor"+"_"+ str(use_case): top_k,
-            "batch_size"+"_"+ str(use_case): self.batch_size,
-            "device"+"_"+ str(use_case): self.device,
+            "top_k_predictor" + "_"+ str(use_case): top_k,
+            "batch_size" + "_"+ str(use_case): self.batch_size,
+            "device" + "_"+ str(use_case): self.device,
         }
+
         mlflow.log_params(params)
+
         for i, sim in zip(indices, torch.softmax(values, dim=0)):
             output_dict[f'Rank-{abs(top_k - output_num) + 1}'] = {
                 'Probability': float(f"{float(sim)*100:.4f}"),
@@ -230,6 +232,7 @@ class CLIPDemo:
                 mlflow.log_metric("Latency"+"_"+ str(use_case), latency)
                 break
         return output_dict
+
 
 def clip_wraper_creator():
     """create a dummy CLIPModel to wrap text and vision encoders in order to use CLIPTrainer"""
@@ -258,6 +261,7 @@ clip_raw.vision_model = vision_encoder_raw
 
 
 search_demo_raw = CLIPDemo(clip_raw.vision_model, clip_raw.text_model, tokenizer)
+search_demo_raw.text = test_df_general.label.tolist()
 search_demo_raw.text_embeddings = torch.load(
     '/var/lib/shadow-data/text_embeddings_general_no_finetune.pt')
 
