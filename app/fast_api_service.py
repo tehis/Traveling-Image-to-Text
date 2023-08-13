@@ -270,10 +270,10 @@ app = FastAPI()
 
 
 EXPERIMENT_NAME = "shadow expriment"
-# EXPERIMENT_ID = mlflow.create_experiment(EXPERIMENT_NAME)
+EXPERIMENT_ID = mlflow.create_experiment(EXPERIMENT_NAME)
 RUN_NAME_General = "shadow runs"
-mlflow.set_experiment(EXPERIMENT_NAME)
-run_General = mlflow.start_run(run_name=RUN_NAME_General)
+# mlflow.set_experiment(EXPERIMENT_NAME)
+run_General = mlflow.start_run(experiment_id =EXPERIMENT_ID,run_name=RUN_NAME_General)
 # run_General = mlflow.start_run(run_name=RUN_NAME_General)
 RUN_ID_General = run_General.info.run_id
 
